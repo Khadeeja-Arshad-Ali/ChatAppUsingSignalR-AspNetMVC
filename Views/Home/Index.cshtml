@@ -1,7 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<html @*id="msgActivity"*@>
+<head>
+<meta name="viewport" content="width=device-width"/>
+@*<link href="~/css/chatApp.css" rel="stylesheet"/>*@
+</head>
+<body>
 <div class="text-center">
     <h1 class="display-4">Welcome To The Chat Room</h1>
 </div>
@@ -18,95 +23,24 @@
         <div id="msgPanel" class="row"
                <div class="col-6">
                    <ul id="messagesList"></ul>
-                   <span id="delivered"><img height="15px" width="15px" src="img/single_tick-sent.png"/></span>
                    <ul id="typing"></ul>
+                   <ul id="delivered/seen"></ul>
+                   <ul id="lastSeen"></ul>
                </div>
         </div>
          <hr/>
-        <input type="text" id="InputChatMessage" onfocusin="delivered()" autocomplete="off" />
-      <input type="button" id="sendButton" value="Send Message"/>
+         <div>
+            <input class="btn btn-outline-primary" style="margin:10px; font-weight:bold;" type="button" id="sendButton" value="Send Message"/>
+            <input class="btn btn-outline-warning" style="margin:10px; type="text" id="InputChatMessage" autocomplete="off" placeholder="Type a message..." />
+          </div>
+          <div>
+                <input class="btn btn-outline-secondary" style="margin:10px; font-weight:bold;" type="button" id="sendPvtButton" value="Send Privately" />
+                <input class="btn btn-outline-danger" style="margin:10px; type="text" id="InputPvtChatMessage" autocomplete="off" placeholder="Type a message..." />
+        </div>
     </div>
 </div>
 
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-<script>
-    "use strict";
-
-    var connection = new signalR.HubConnectionBuilder().withUrl("/Home/Index").build();
-    var username="";
-
-    document.getElementById("sendButton").disabled = true;
-
-    connection.on("RecieveMessage", function(user, message, typing){
-        var msg = message.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g, "&gt;");
-        var encodedMsg = user + " says: " +msg;
-        var li = document.createElement("li");
-        li.textContent = encodedMsg;
-        document.getElementById("messagesList").appendChild(li);
-        var _typing = typing;
-        var span = document.createElement("span");
-        span.textContent = _typing;
-        document.getElementById("typing").appendChild(span);
-
-    });
-
-    connection.start().then(function (){
-        document.getElementById("sendButton").disabled = false;
-    }).catch(function (err) {
-        return console.error(err.toString());
-    });
-
-    document.getElementById("sendButton").addEventListener("click", function (event){
-        var message = document.getElementById("InputChatMessage").value;
-        connection.invoke("SendMessage", username, message).then(function (){
-            document.getElementById("InputChatMessage").value = "";
-        }).catch(function  (err)
-
-        {
-            return console.error(err.toString());
-        });
-        event.preventDefault();
-    });
-    function SetUsername(){
-        var usernameinput = document.getElementById("username").value;
-        if(usernameinput ==""){
-            alert("Please enter your username");
-            return;
-        }
-            username = usernameinput;
-
-            document.getElementById("userinfo").style.display="none";
-            document.getElementById("messagearea").style.display = "block";
-
-            document.getElementById("username1").innerHTML = usernameinput;
-    }
-
-    //user is typing
-    var isTyping = false;
-    var isNotTyping;
-    document.getElementById("InputChatMessage").onkeypress = () => {
-        sendIsTypingToUser();
-        if (isNotTyping != undefined) clearTimeout(isNotTyping);
-        isNotTyping = setTimeout(sendIsNotTyping, 900);
-    }
-
-    function sendIsTypingToUser() {
-        if (!isTyping) {
-            console.log("Typing...");
-            var typing = document.getElementById("typing").innerHTML = "typing..."
-            isTyping = true;
-        }
-    }
-    function sendIsNotTyping() {
-        console.log("");
-        var nottyping = document.getElementById("typing").innerHTML = ""
-        isTyping = false;
-    }
-
-    //Delivered(double) & sent(single tick)
-    function delivered() {
-        var st = document.getElementById("delivered");
-        st.innerHTML = "<img src=\"~/img/double_tick-seen.png\" width=\"20px\" height=\"20px\">";
-    }
-
-</script>
+<script src="~/js/ChatApp.js"></script>
+</body>
+</html>
