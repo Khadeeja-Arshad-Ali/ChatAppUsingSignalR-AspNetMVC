@@ -42,12 +42,12 @@ connection.start().then(function () {
 //receiving messaging
 connection.on("RecieveMessage", function (username, message) {
     var msg = message;
-    var encodedMsg = username + " says: " + msg;
+    var encodedMsg = `<span><p>${username} says: ${msg}</p><p><i>delivered</i></p>.</span>`;
+    console.log(`before: ${encodedMsg}`);
     var li = document.createElement("li");
-    li.textContent = encodedMsg;
+    li.innerHTML = encodedMsg;
+    console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
-
-    
 });
 
 //sending messaging
@@ -60,6 +60,28 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     });
     event.preventDefault();
 });
+//-----------------------------------------------------------------------------------------------
+
+////receiving msgs Pvt
+//connection.on("ReceivePrivateMessage", function (user, pvtMsg) {
+//    var pvtMessage = pvtMsg;
+//    var encodedPvtMsg = user + "Privately saying: " + pvtMessage;
+//    var li = document.createElement("li");
+//    li.textContent = encodedPvtMsg;
+//    document.getElementById("pvtMsgList").appendChild(li);
+//});
+
+
+////sending msgs Pvt
+//document.getElementById("sendPvtButton").addEventListener("click", function (event) {
+//    var pvtMsg = document.getElementById("InputPvtChatMessage").value;
+//    connection.invoke("SendPrivateMessage", user, pvtMsg).then(function () {
+//        document.getElementById("InputPvtChatMessage").value = "";
+//    }).catch(function (err) {
+//        return console.error(err.toString());
+//    });
+//    event.preventDefault();
+//});
 
 
 //-----------------------------------------------------------------------------------------------
@@ -68,14 +90,14 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 connection.on("userTypingReceive", function (username, typing) {
     var typ = typing;
-    var typEncodedMsg = username + " is " + typ;
+    var typEncodedMsg = `<span>${username} <i>is ${typ}</i></span>`;
     var li = document.createElement("li");
-    li.textContent = typEncodedMsg;
+    li.innerHTML = typEncodedMsg;
     document.getElementById("typing").appendChild(li);
-    typ = true;
-    var Notyp;
-    if (Notyp != undefined) clearTimeout(Notyp);
-    Notyp = setTimeout(typingHide, 900);
+    //typ = true;
+    //var Notyp;
+    //if (Notyp != undefined) clearTimeout(Notyp);
+    //Notyp = setTimeout(typingHide, 900);
     
 });
 
@@ -89,7 +111,7 @@ function typingHide() {
 //sending typing msg
 var showTyping = true;
 document.getElementById("InputChatMessage").addEventListener("keyup", function (event) {
-    if (showTyping = true) {
+    if (showTyping) {
         showTyping = false;
         var typing = document.getElementById("InputChatMessage").innerHTML = "typing...";
         connection.invoke("userTypingSend", username, typing);
@@ -99,59 +121,48 @@ document.getElementById("InputChatMessage").addEventListener("keyup", function (
 
 //-----------------------------------------------------------------------------------------------
 
-////receiving delivered/seen msg
 
-//if (seen != "seen") {
-//    connection.on("msgDeliveredReceive", function (username, delivered) {
-//        var del = delivered;
-//        var delEncodedMsg = username + " : " + del;
-//        var li = document.createElement("li");
-//        li.textContent = delEncodedMsg;
-//        document.getElementById("delivered/seen").appendChild(li);
-//    });
-//}
-//else {
-//    connection.on("msgSeenReceive", function (username, seen) {
-//        var sn =  seen;
-//        var snEncodedMsg = username + " : " + sn;
-//        var li = document.createElement("li");
-//        li.textContent = snEncodedMsg;
-//        document.getElementById("delivered/seen").appendChild(li);
-//}
+//receiving seen msg
+connection.on("msgSeenReceive", function (username, seen) {
+    var sn = seen;
+    var snEncodedMsg = `${username} :  <i>${sn}</i>`;
+    var li = document.createElement("li");
+    li.innerHTML = snEncodedMsg;
+    document.getElementById("seen").appendChild(li);
+});
+//sending seen msg
+document.getElementById("InputChatMessage").addEventListener("focusin", function (event) {
+    var seen = document.getElementById("seen").innerHTML = "seen";
+    connection.invoke("msgSeenSend", username, seen);
+});
 
-
-//sending delivered/seen msg
-//document.getElementById("InputChatMessage").addEventListener("focusin", function (event) {
-    //if (this.onmouseenter = document.getElementById("msgActivity").innerHTML)
-    //{
-    //    var delivered = document.getElementById("delivered/seen").innerHTML = "delivered";
-    //    connection.invoke("msgDeliveredsend", username, delivered);
-    //}
-    //else (this.onmouseleave = document.getElementById("msgActivity").innerHTML)
-    //{
-    //    var seen = document.getElementById("delivered/seen").innerHTML = "seen";
-    //    connection.invoke("msgSeenSend", username, seen);
-    //}
-//});
 
 //-----------------------------------------------------------------------------------------------
 
 
 //receiving LastSeenMsg
 
-//connection.on("msgLastSeenReceive", function (username, lastseen) {
-//    var ls = username + " : " + lastseen;
-//    var lsEncodedMsg = ls;
-//    var li = document.createElement("li");
-//    li.textContent = lsEncodedMsg;
-//    document.getElementById("lastSeen").appendChild(li);
-//});
 
-////sending LastSeenMsg
+connection.on("msgLastSeenReceive", function (username, lastseen) {
+    var currentdate = new Date();
+    var lastseen = "Last Seen: " + currentdate.getDate() + "/"
+        + (currentdate.getMonth() + 1) + "/"
+        + currentdate.getFullYear() + " @ "
+        + currentdate.getHours() + ":"
+        + currentdate.getMinutes() + ":"
+        + currentdate.getSeconds();
+    console.log(lastseen);
+    var ls = `${username} : <i>${lastseen}</i>`;
+    var li = document.createElement("li");
+    li.innerHTML = ls;
+    document.getElementById("lastSeen").appendChild(li);
+});
 
-//document.getElementById("InputChatMessage").addEventListener("focusout", function (event) {
-//    var lastseen = document.getElementById("InputChatMessage").innerHTML = "lastseen";
-//    connection.invoke("msgLastSeenSend", username, lastseen);
-//});
+//sending LastSeenMsg
+
+document.getElementById("InputChatMessage").addEventListener("focusout", function (event) {
+    var lastseen = document.getElementById("InputChatMessage").innerHTML;
+    connection.invoke("msgLastSeenSend", username, lastseen);
+});
 
 //---------------------------------------------------------------------------------------------
