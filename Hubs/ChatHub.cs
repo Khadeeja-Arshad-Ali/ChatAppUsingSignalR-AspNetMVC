@@ -7,14 +7,14 @@ namespace ChatAppUsingSignalR_AspNetMVC.Hubs
         //General Messaging
         public async Task SendMessage(string username, string message)
         {
-            Clients.All.SendAsync("RecieveMessage", username,message);
+            await Clients.All.SendAsync("RecieveMessage", username,message);
         }
         //Private Messaging
-        //public async Task SendPrivateMessage(string user,string pvtMsg)
+        //public async Task SendPrivateMessage(string user, string pvtMsg)
         //{
-        //     Clients.User(user).SendAsync("ReceivePrivateMessage", user, pvtMsg);
+        //    await Clients.User(user).SendAsync("ReceivePrivateMessage", user, pvtMsg);
         //}
-        ////Grouping Messages Adding
+        //Grouping Messages Adding
         //public async Task AddToGroup(string grpName)
         //{
         //    await Groups.AddToGroupAsync(Context.ConnectionId, grpName);
@@ -22,14 +22,14 @@ namespace ChatAppUsingSignalR_AspNetMVC.Hubs
         //}
         ////Grouping Messages Removing
         //public async Task RemoveToGroup(string grpName)
-        //{ 
+        //{
         //    await Groups.RemoveFromGroupAsync(Context.ConnectionId, grpName);
         //    await Clients.Group(grpName).SendAsync("Send", $"{Context.ConnectionId} has left the group{grpName}.");
         //}
         //typing indicator
         public async Task userTypingSend(string username, string typing)
         {
-            Clients.Others.SendAsync("userTypingReceive", username, typing);
+            await Clients.Others.SendAsync("userTypingReceive", username, typing);
         }
         ////delivered indicator
         //public async Task msgDeliveredsend(string username, string delivered)
@@ -39,12 +39,12 @@ namespace ChatAppUsingSignalR_AspNetMVC.Hubs
         //seen indicator
         public async Task msgSeenSend(string username, string seen)
         {
-            Clients.Others.SendAsync("msgSeenReceive", username, seen);
+            await Clients.Others.SendAsync("msgSeenReceive", username, seen);
         }
         //lastSeen indicator
         public async Task msgLastSeenSend(string username, string lastseen)
         {
-            Clients.Others.SendAsync("msgLastSeenReceive", username, lastseen);
+            await Clients.Others.SendAsync("msgLastSeenReceive", username, lastseen);
         }
     }
 }

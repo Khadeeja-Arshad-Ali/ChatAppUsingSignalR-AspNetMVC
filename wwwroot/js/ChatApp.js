@@ -41,11 +41,17 @@ connection.start().then(function () {
 
 //receiving messaging
 connection.on("RecieveMessage", function (username, message) {
+    var currentdate = new Date();
+    var delivered = "delivered: "
+        + currentdate.getHours() + ":"
+        + currentdate.getMinutes() + ":"
+        + currentdate.getSeconds();
+    console.log(delivered);
     var msg = message;
-    var encodedMsg = `<span><p>${username} says: ${msg}</p><p><i>delivered</i></p>.</span>`;
+    var encodedMsg = `<span><p>${username} says: ${msg}</p><sub><i>${delivered}</i></sub></span>`;
     console.log(`before: ${encodedMsg}`);
     var li = document.createElement("li");
-    li.innerHTML = encodedMsg;
+    li.innerHTML = `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
 });
@@ -53,6 +59,10 @@ connection.on("RecieveMessage", function (username, message) {
 //sending messaging
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var message = document.getElementById("InputChatMessage").value;
+    if (message == "") {
+        alert("type your message");
+        return;
+    }
     connection.invoke("SendMessage", username, message).then(function () {
         document.getElementById("InputChatMessage").value = "";
     }).catch(function (err) {
@@ -89,26 +99,27 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 //receiving typing msg
 
 connection.on("userTypingReceive", function (username, typing) {
-    var typ = typing;
-    var typEncodedMsg = `<span>${username} <i>is ${typ}</i></span>`;
-    var li = document.createElement("li");
-    li.innerHTML = typEncodedMsg;
-    document.getElementById("typing").appendChild(li);
-    //typ = true;
-    //var Notyp;
-    //if (Notyp != undefined) clearTimeout(Notyp);
-    //Notyp = setTimeout(typingHide, 900);
+        var typ = typing;
+        var typEncodedMsg = `<span>${username} <i>is ${typ}</i></span>`;
+        var li = document.createElement("li");
+        li.innerHTML = typEncodedMsg;
+        document.getElementById("typing").appendChild(li);
+        typ = true;
+        var Notyp;
+        if (Notyp != undefined) clearTimeout(Notyp);
+        Notyp = setTimeout(typingHide, 5000);
     
 });
 
 function typingHide() {
     console.log("");
     typ = document.getElementById("typing").innerHTML = "";
-    /*typ = false;*/
+    typ = false;
 }
 
 
 //sending typing msg
+
 var showTyping = true;
 document.getElementById("InputChatMessage").addEventListener("keyup", function (event) {
     if (showTyping) {
@@ -121,18 +132,28 @@ document.getElementById("InputChatMessage").addEventListener("keyup", function (
 
 //-----------------------------------------------------------------------------------------------
 
+//----------------SEEN-------------
 
 //receiving seen msg
 connection.on("msgSeenReceive", function (username, seen) {
-    var sn = seen;
-    var snEncodedMsg = `${username} :  <i>${sn}</i>`;
+    var currentdate = new Date();
+    var seen = "Seen: "
+        + currentdate.getHours() + ":"
+        + currentdate.getMinutes() + ":"
+        + currentdate.getSeconds();
+    console.log(seen);
+    if (document.getElementById("container") == undefined) {
+        alert("type your message");
+        return;
+    }
+    var snEncodedMsg = `${username} :  <sub><i>${seen}</i></sub>`;
     var li = document.createElement("li");
     li.innerHTML = snEncodedMsg;
     document.getElementById("seen").appendChild(li);
 });
 //sending seen msg
 document.getElementById("InputChatMessage").addEventListener("focusin", function (event) {
-    var seen = document.getElementById("seen").innerHTML = "seen";
+    var seen = document.getElementById("seen").innerHTML;
     connection.invoke("msgSeenSend", username, seen);
 });
 
@@ -152,7 +173,11 @@ connection.on("msgLastSeenReceive", function (username, lastseen) {
         + currentdate.getMinutes() + ":"
         + currentdate.getSeconds();
     console.log(lastseen);
-    var ls = `${username} : <i>${lastseen}</i>`;
+    if (document.getElementById("container") == undefined) {
+        alert("type your message");
+        return;
+    }
+    var ls = `${username} : <sub><i>${lastseen}</i></sub>`;
     var li = document.createElement("li");
     li.innerHTML = ls;
     document.getElementById("lastSeen").appendChild(li);
