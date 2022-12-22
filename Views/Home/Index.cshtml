@@ -5,6 +5,8 @@
 <head>
 <meta name="viewport" content="width=device-width"/>
 @*<link href="~/css/chatApp.css" rel="stylesheet"/>*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet"/>
+<link href="~/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
 </head>
 <body>
 <div class="text-center">
@@ -23,15 +25,18 @@
         <div id="msgPanel" class="row"
                <div class="col-6">
                    <ul id="messagesList"></ul>
+                   <p id="typing"></p>
                    <ul id="pvtMsgList"></ul>
-                   <ul id="typing"></ul>
                    <ul id="seen"></ul>
                    <ul id="lastSeen"></ul>
                </div>
+              @* <input type="textbox" id="typer" placeholder="Start typing here..." />
+               <p id="status">change me</p>*@
         </div>
          <hr/>
          <div>
-            <input class="btn btn-outline-primary" style="margin:10px; font-weight:bold;" type="button" id="sendButton" value="Send Message"/>
+                <i class="fa fa-paper-plane" aria-hidden="true"></i><input class="btn btn-outline-primary" style="margin:10px; font-weight:bold;" type="button" id="sendButton" value="Send Message" />
+                 
             <input class="btn btn-outline-warning" style="margin:10px; type="text" id="InputChatMessage" autocomplete="off" placeholder="Type a message..." />
           </div>
         @*  <div>
@@ -43,5 +48,6 @@
 
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/ChatApp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
 </body>
 </html>
