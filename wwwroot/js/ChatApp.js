@@ -79,13 +79,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 //------APPROACH-1-------------
 
-//connection.on("userTypingReceive", function (username, typing) {
-//        var typ = typing;
-//        var typEncodedMsg = `<span>${username} <i>is ${typ}</i></span>`;
-//        var li = document.createElement("li");
-//        li.innerHTML = typEncodedMsg;
-//        document.getElementById("typing").appendChild(li);
-//});
+
 
 
 ////sending typing msg
@@ -118,24 +112,36 @@ let timer, timeoutVal = 1000; // time it takes to wait for user to stop typing i
 const status = document.getElementById("typing");
 const typing = document.getElementById("InputChatMessage");
 
-typing.addEventListener("keypress", handleKeyPress);
+//typing.addEventListener("keypress", handleKeyPress);
 typing.addEventListener("keyup", handleKeyUp);
 
-// when user is pressing down on keys, clear the timeout
-function handleKeyPress(e) {
-    
+connection.on("userTypingReceive", function (username, typing) {
     window.clearTimeout(timer);
-    status.innerHTML = "Typing...";
-    var typing = status.innerHTML;
-}
+    status.innerHTML = username+ " : typing...";
+
+    timer = window.setTimeout(() => {
+        status.innerHTML = "";
+    }, timeoutVal);
+
+});
+
+// when user is pressing down on keys, clear the timeout
+//function handleKeyPress(e) {
+    
+//    window.clearTimeout(timer);
+//    status.innerHTML = "typing...";
+//    var typing = status.innerHTML;
+//}
 
 // when the user has stopped pressing on keys, set the timeout
 // if the user presses on keys before the timeout is reached, then this timeout is canceled
 function handleKeyUp(e) {
-    window.clearTimeout(timer); // prevent errant multiple timeouts from being generated
-    timer = window.setTimeout(() => {
-        status.innerHTML = "";
-    }, timeoutVal);
+    connection.invoke("userTypingSend", username, "123");
+    //window.clearTimeout(timer); // prevent errant multiple timeouts from being generated
+    //timer = window.setTimeout(() => {
+    //    status.innerHTML = "";
+    //}, timeoutVal);
+
 }
 
 //-----------------------------------------------------------------------------------------------
