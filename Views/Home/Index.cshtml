@@ -2,52 +2,109 @@
     ViewData["Title"] = "Home Page";
 }
 <html @*id="msgActivity"*@>
-<head>
-<meta name="viewport" content="width=device-width"/>
-@*<link href="~/css/chatApp.css" rel="stylesheet"/>*@
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet"/>
-<link href="~/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
-</head>
-<body>
-<div class="text-center">
-    <h1 class="display-4">Welcome To The Chat Room</h1>
-</div>
 
-<div id="container">
-    <div id="userinfo" class="row">
-        <label for="username">Enter your user name</label>
-        <input type="text" class="form-control" id="username" name="username" autocomplete="off"/>
-        <button type="button" style="margin-top:20px;" class="btn btn-primary" onclick="SetUsername();">Enter the chat room</button>
-    </div>
-    <div id="messagearea" class="row" style="display:none;">
-        <div>Joined as:<b><span id="username1">Not Set</span></b></div>
-        <hr/>
-        <div id="msgPanel" class="row"
-               <div class="col-6">
-                   <ul id="messagesList"></ul>
-                   <p id="typing"></p>
-                   <ul id="pvtMsgList"></ul>
-                   <ul id="seen"></ul>
-                   <ul id="lastSeen"></ul>
-               </div>
-              @* <input type="textbox" id="typer" placeholder="Start typing here..." />
-               <p id="status">change me</p>*@
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/chatApp.css" rel="stylesheet"/>*
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet" />
+    <link href="~/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+       <div class="text-center">
+        <h1 class="display-4">Welcome To The Chat Room</h1>
+        <div id="userinfo" class="row">
+            <label style="margin-left: 25px;" for="username">Enter your user name</label>
+            <input style="margin-left: 25px;" type="text" class="form-control" id="username" name="username" autocomplete="off"/>
+            <button type="button" style="margin-top:20px; margin-left: 25px;" class="btn btn-primary" onclick="SetUsername()";>Enter the chat room</button>
+           
         </div>
-         <hr/>
-         <div>
-                <i class="fa fa-paper-plane" aria-hidden="true"></i><input class="btn btn-outline-primary" style="margin:10px; font-weight:bold;" type="button" id="sendButton" value="Send Message" />
-                 
-            <input class="btn btn-outline-warning" style="margin:10px; type="text" id="InputChatMessage" autocomplete="off" placeholder="Type a message..." />
-          </div>
-        @*  <div>
-                <input class="btn btn-outline-secondary" style="margin:10px; font-weight:bold;" type="button" id="sendPvtButton" value="Send Privately" />
-                <input class="btn btn-outline-primary text-bold" style="margin:10px; type="text" id="InputPvtChatMessage" autocomplete="off" placeholder="Type a message..." />
+       
+    </div>
+        @* <div id="messagearea" class="row" style="display:none;">
+            <div>Joined as:<b><span id="username1">Not Set</span></b></div>
+            <hr /> *@
+            @* <div id="msgPanel" class="row" <div class="col-6">
+                <ul id="messagesList"></ul>
+                <p id="typing"></p>
+                <ul id="pvtMsgList"></ul>
+                <ul id="seen"></ul>
+                <ul id="lastSeen"></ul>
+            </div> *@
+                @* <input type="textbox" id="typer" placeholder="Start typing here..." />
+            <p id="status">change me</p>*@
+        </div>
+        <hr />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <div id="chat-container" class="container">
+            <div class="row clearfix">
+                <div class="col-lg-12">
+
+                    <div class=" card chat-app">
+                        <div class="chat">
+                            <div class="chat-header clearfix">
+                                <div class="row">
+                                    <div class="col-lg-6">
+
+
+
+                                        <div class="chat-about" id="messagearea">
+                                            <h6 id="username1" class="m-b-0">Aiden Chavez</h6>
+                                            <small id="lastSeen">Last seen: Just now</small>
+                                            <ul id="messagesList"></ul>
+                                            <p id="typing"></p>
+                                            <ul id="pvtMsgList"></ul>
+                                            <ul id="seen"></ul>
+                                            <ul id="lastSeen"></ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="chat-history">
+                                    <ul class="m-b-0"></ul>
+                                </div>
+                            </div>
+
+
+
+                            <div class="chat-message clearfix">
+                                <div class="input-group mb-0">
+                                    <input type="text" class="form-control" id="InputChatMessage"
+                                        placeholder="Enter text here...">
+                                    <div class="input-group-prepend">
+                                        <button class="input-group-text" id="sendButton"><i
+                                                class="fa fa-send"></i></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            @* <div>
+        <i class="fa fa-paper-plane" aria-hidden="true"></i><input class="btn btn-outline-primary" style="margin:10px;
+        font-weight:bold;" type="button" id="sendButton" value="Send Message" />
+
+        <input class="btn btn-outline-warning" style="margin:10px"; type="text" id="InputChatMessage" autocomplete="off"
+        placeholder="Type a message..." />
+        </div> *@
+            @* <div>
+        <input class="btn btn-outline-secondary" style="margin:10px; font-weight:bold;" type="button" id="sendPvtButton"
+        value="Send Privately" />
+        <input class="btn btn-outline-primary text-bold" style="margin:10px; type="text" id="InputPvtChatMessage"
+        autocomplete="off" placeholder="Type a message..." />
         </div>*@
     </div>
-</div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/ChatApp.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/ChatApp.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
 </body>
+
 </html>
