@@ -46,12 +46,13 @@ connection.start().then(function () {
 connection.on("RecieveMessage", function (username, message) {
     var currentUser= document.getElementById("username").value;
     var currentdate = new Date();
+    var currenttime=getCurrentTime();
     var delivered = "Delivered: "
         + currentdate.getHours() + ":"
         + (currentdate.getMinutes() < 10 ? '0' : '') + currentdate.getMinutes(); // Ensure minutes are displayed with leading zero if necessary
     console.log(delivered);
    
-    var encodedMsg = `<span>${username} says: ${message}<sub>[<i>${delivered}</i>]</sub></span>`;
+    var encodedMsg = `<span>${username} says: ${message}<sub>[<i>${currenttime}</i>]</sub></span>`;
     console.log(`before: ${encodedMsg}`);
 
     var li = document.createElement("li");
@@ -59,14 +60,20 @@ connection.on("RecieveMessage", function (username, message) {
 
         // If the message is from the current user
         li.classList.add("message","my-message");
+        
+    
+
     }else{
         li.classList.add("message","other-message");
+         
+      
 
     }
     // Add message class for styling
     li.innerHTML = `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
+    updateLastSeen();
 });
 
 
@@ -217,3 +224,41 @@ document.getElementById("InputChatMessage").addEventListener("focusout", functio
 });
 
 //---------------------------------------------------------------------------------------------
+function getCurrentTime() {
+    var now = new Date();
+    var messageDate = now.toDateString(); // Get the message date
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight
+    var timeString = hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + ampm;
+
+    // Check if the message was sent today, yesterday, or another day
+    var today = new Date().toDateString();
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday = yesterday.toDateString();
+
+    if (messageDate === today) {
+        return 'Today, ' + timeString;
+    } else if (messageDate === yesterday) {
+        return 'Yesterday, ' + timeString;
+    } else {
+        return messageDate + ' ' + timeString;
+    }
+}
+
+function updateLastSeen() {
+    var lastSeen = document.getElementById("lastSeen");
+    var now = new Date();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    var timeString = hours + ":" + (minutes < 10 ? "0" + minutes : minutes); // Format time as HH:MM
+    lastSeen.textContent = "Last seen: " + timeString;
+}
+
+// Update last seen when the window gets focus
+window.addEventListener("focus", function () {
+    updateLastSeen();
+});
