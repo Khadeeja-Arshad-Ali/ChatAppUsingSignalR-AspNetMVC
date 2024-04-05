@@ -12,32 +12,19 @@ var username = "";
 
 //setting input username as a username
 function SetUsername() {
-//     var usernameinput = document.getElementById("username").value;
-//     if (usernameinput == "") {
-//         alert("Please enter your username");
-//         return;
-//     }
-//     username = usernameinput;
+    var usernameinput = document.getElementById("username").value;
+    if (usernameinput == "") {
+        alert("Please enter your username");
+        return;
+    }
+    username = usernameinput;
 
-//     document.getElementById("userinfo").style.display = "none";
-//     document.getElementById("messagearea").style.display = "block";
+    document.getElementById("userinfo").style.display = "none";
+    document.getElementById("messagearea").style.display = "block";
 
-//     document.getElementById("username1").innerHTML = usernameinput;
-var usernameInput = document.getElementById("username");
-var chatContainer = document.getElementById("chat-container");
-var usercontainer = document.getElementById("userinfo");
-var username = usernameInput.value.trim();
-if (username !== "") {
-    var usernameSpan = document.getElementById("username1");
-    usernameSpan.textContent = username;
-    chatContainer.style.display = "block";
-    usercontainer.style.display = "none";
-    // Display the chat container
-} else {
-    alert("Please enter a username.");
+    document.getElementById("username1").innerHTML = usernameinput;
+
 }
-}
-// }
 
 //-----------------------------------------------------------------------------------------------
 
