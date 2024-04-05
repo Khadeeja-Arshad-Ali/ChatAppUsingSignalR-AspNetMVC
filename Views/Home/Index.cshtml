@@ -2,6 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 <html @*id="msgActivity"*@>
+
 <head>
 <meta name="viewport" content="width=device-width"/>
    <link href="~/css/chatApp.css" rel="stylesheet"/> 
@@ -9,16 +10,17 @@
 <link href="~/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
-<body>
-<div class="text-center">
-    <h1 class="display-4">Welcome To The Chat Room</h1>
-</div>
 
-<div id="container">
-    <div id="userinfo" class="row">
-        <label for="username">Enter your user name</label>
-        <input type="text" class="form-control" id="username" name="username" autocomplete="off"/>
-        <button type="button" style="margin-top:20px;" class="btn btn-primary" onclick="SetUsername();">Enter the chat room</button>
+<body>
+       <div class="text-center">
+        <h1 class="display-4">Welcome To The Chat Room</h1>
+        <div id="userinfo" class="row">
+            <label style="margin-left: 25px;" for="username">Enter your user name</label>
+            <input style="margin-left: 25px;" type="text" class="form-control" id="username" name="username" autocomplete="off"/>
+            <button type="button" style="margin-top:20px; margin-left: 25px;" class="btn btn-primary" onclick="SetUsername()";>Enter the chat room</button>
+           
+        </div>
+       
     </div>
     <div id="messagearea" class="row" style="display: none;">
 
@@ -103,4 +105,5 @@
 <script src="~/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
 </body>
+
 </html>
