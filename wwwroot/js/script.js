@@ -12,19 +12,32 @@ var username = "";
 
 //setting input username as a username
 function SetUsername() {
-    var usernameinput = document.getElementById("username").value;
-    if (usernameinput == "") {
-        alert("Please enter your username");
-        return;
-    }
-    username = usernameinput;
+//     var usernameinput = document.getElementById("username").value;
+//     if (usernameinput == "") {
+//         alert("Please enter your username");
+//         return;
+//     }
+//     username = usernameinput;
 
-    document.getElementById("userinfo").style.display = "none";
-    document.getElementById("messagearea").style.display = "block";
+//     document.getElementById("userinfo").style.display = "none";
+//     document.getElementById("messagearea").style.display = "block";
 
-    document.getElementById("username1").innerHTML = usernameinput;
-
+//     document.getElementById("username1").innerHTML = usernameinput;
+var usernameInput = document.getElementById("username");
+var chatContainer = document.getElementById("chat-container");
+var usercontainer = document.getElementById("userinfo");
+var username = usernameInput.value.trim();
+if (username !== "") {
+    var usernameSpan = document.getElementById("username1");
+    usernameSpan.textContent = username;
+    chatContainer.style.display = "block";
+    usercontainer.style.display = "none";
+    // Display the chat container
+} else {
+    alert("Please enter a username.");
 }
+}
+// }
 
 //-----------------------------------------------------------------------------------------------
 
@@ -43,24 +56,46 @@ connection.start().then(function () {
 //--------------MESSAGING------------
 
 //receiving messaging
+// connection.on("RecieveMessage", function (username, message) {
+//     var currentdate = new Date();
+//     var delivered = "delivered: "
+//         + currentdate.getHours() + ":"
+//         + currentdate.getMinutes() ;
+//     console.log(delivered);
+//     var msg = message;
+   
+//     var encodedMsg = `<span>${username} says: ${msg}<sub> [ <i>${delivered}</i></sub> ]</span>`;
+//     console.log(`before: ${encodedMsg}`);
+//     var li = document.createElement("li");
+//     li.innerHTML = `${encodedMsg}`;
+//     console.log(`after: ${li.textContent}`);
+//     document.getElementById("messagesList").appendChild(li);
+// });
 connection.on("RecieveMessage", function (username, message) {
-    let currentuser=document.getElementById("username").value;
+    var currentUser= document.getElementById("username1");
     var currentdate = new Date();
-    console.log(currentuser);
-    var delivered = "delivered: "
+    var delivered = "Delivered: "
         + currentdate.getHours() + ":"
-        + currentdate.getMinutes() ;
+        + (currentdate.getMinutes() < 10 ? '0' : '') + currentdate.getMinutes(); // Ensure minutes are displayed with leading zero if necessary
     console.log(delivered);
-    var msg = message;
-    var encodedMsg = `<span>${username} says: ${msg}<sub> [ <i>${delivered}</i></sub> ]</span>`;
+   
+    var encodedMsg = `<span>${username} says: ${message}<sub>[<i>${delivered}</i>]</sub></span>`;
     console.log(`before: ${encodedMsg}`);
+
     var li = document.createElement("li");
-  
-    li.classList.add("message", "my-message");
+    
+    if (username === currentUser) {
+        // If the message is from the current user
+        li.classList.add("message","my-message");
+    } else {
+        // If the message is from another user
+        li.classList.add("message","other-message");
+    } // Add message class for styling
     li.innerHTML = `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
 });
+
 
 //sending messaging
 document.getElementById("sendButton").addEventListener("click", function (event) {

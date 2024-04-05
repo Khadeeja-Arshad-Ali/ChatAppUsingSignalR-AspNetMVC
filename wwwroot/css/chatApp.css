@@ -80,11 +80,12 @@
     }
 }
 
-html {
+/* html {
     display: table;
     height: 100%;
     width: 100%;
-}
+} */
+
 
 
 body{
@@ -360,11 +361,4 @@ body{
 }
 #messageList{
     list-style: none;
-   
-}
-#userinfo{
-    display: flex;
-    align-items: center;
-    vertical-align: middle;
-
 }
