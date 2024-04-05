@@ -213,7 +213,7 @@ body{
     line-height: 26px;
     font-size: 16px;
     border-radius: 7px;
-    display: inline;
+    display: inline-block;
     position: relative;
     margin-bottom: 10px;
 }
@@ -248,7 +248,8 @@ body{
     pointer-events: none;
     border-bottom-color: #efefef;
     border-width: 10px;
-    margin-left: -10px
+    margin-left: -10px;
+   
 }
 
 .other-message {
@@ -262,6 +263,7 @@ body{
     border-bottom-color: #e8f1f3;
     left: 93%;
     display: block;
+   
 }
 
 .chat .chat-message {
