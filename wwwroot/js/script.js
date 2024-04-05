@@ -23,6 +23,7 @@ function SetUsername() {
     document.getElementById("messagearea").style.display = "block";
 
     document.getElementById("username1").innerHTML = usernameinput;
+
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -43,7 +44,9 @@ connection.start().then(function () {
 
 //receiving messaging
 connection.on("RecieveMessage", function (username, message) {
+    let currentuser=document.getElementById("username").value;
     var currentdate = new Date();
+    console.log(currentuser);
     var delivered = "delivered: "
         + currentdate.getHours() + ":"
         + currentdate.getMinutes() ;
@@ -52,6 +55,8 @@ connection.on("RecieveMessage", function (username, message) {
     var encodedMsg = `<span>${username} says: ${msg}<sub> [ <i>${delivered}</i></sub> ]</span>`;
     console.log(`before: ${encodedMsg}`);
     var li = document.createElement("li");
+  
+    li.classList.add("message", "my-message");
     li.innerHTML = `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
