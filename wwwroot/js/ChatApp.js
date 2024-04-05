@@ -56,45 +56,41 @@ connection.start().then(function () {
 //--------------MESSAGING------------
 
 //receiving messaging
-// connection.on("RecieveMessage", function (username, message) {
-//     var currentdate = new Date();
-//     var delivered = "delivered: "
-//         + currentdate.getHours() + ":"
-//         + currentdate.getMinutes() ;
-//     console.log(delivered);
-//     var msg = message;
-   
-//     var encodedMsg = `<span>${username} says: ${msg}<sub> [ <i>${delivered}</i></sub> ]</span>`;
-//     console.log(`before: ${encodedMsg}`);
-//     var li = document.createElement("li");
-//     li.innerHTML = `${encodedMsg}`;
-//     console.log(`after: ${li.textContent}`);
-//     document.getElementById("messagesList").appendChild(li);
-// });
 connection.on("RecieveMessage", function (username, message) {
-    var currentUser= document.getElementById("username1");
     var currentdate = new Date();
-    var delivered = "Delivered: "
+    var delivered = "delivered: "
         + currentdate.getHours() + ":"
-        + (currentdate.getMinutes() < 10 ? '0' : '') + currentdate.getMinutes(); // Ensure minutes are displayed with leading zero if necessary
+        + currentdate.getMinutes() ;
     console.log(delivered);
+    var msg = message;
    
-    var encodedMsg = `<span>${username} says: ${message}<sub>[<i>${delivered}</i>]</sub></span>`;
+    var encodedMsg = `<span>${username} says: ${msg}<sub> [ <i>${delivered}</i></sub> ]</span>`;
     console.log(`before: ${encodedMsg}`);
-
     var li = document.createElement("li");
-    
-    if (username === currentUser) {
-        // If the message is from the current user
-        li.classList.add("message","my-message");
-    } else {
-        // If the message is from another user
-        li.classList.add("message","other-message");
-    } // Add message class for styling
+   
     li.innerHTML = `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
 });
+// connection.on("RecieveMessage", function (username, message) {
+  
+//     var currentdate = new Date();
+//     var delivered = "Delivered: "
+//         + currentdate.getHours() + ":"
+//         + (currentdate.getMinutes() < 10 ? '0' : '') + currentdate.getMinutes(); // Ensure minutes are displayed with leading zero if necessary
+//     console.log(delivered);
+   
+//     var encodedMsg = `<span>${username} says: ${message}<sub>[<i>${delivered}</i>]</sub></span>`;
+//     console.log(`before: ${encodedMsg}`);
+
+//     var li = document.createElement("li");
+//     li.classList.add("message","my-message");
+    
+//      // Add message class for styling
+//     li.innerHTML = `${encodedMsg}`;
+//     console.log(`after: ${li.textContent}`);
+//     document.getElementById("messagesList").appendChild(li);
+// });
 
 
 //sending messaging

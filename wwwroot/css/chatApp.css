@@ -80,16 +80,13 @@
     }
 }
 
-html {
+/* html {
     display: table;
     height: 100%;
     width: 100%;
-}
+} */
 
-body {
-    display: table-cell;
-    vertical-align: middle;
-}
+
 
 body{
     background-color: #f4f7f6;
@@ -258,13 +255,16 @@ body{
 }
 
 .other-message {
+    margin-bottom: 10px;
     background: #e8f1f3;
-    text-align: right
+    text-align: right;
+    display:block;
 }
 
 .other-message:after {
     border-bottom-color: #e8f1f3;
-    left: 93%
+    left: 93%;
+    display: block;
 }
 
 .chat .chat-message {
@@ -458,4 +458,5 @@ body {
 }
 #messageList{
     list-style: none;
+   
 }
