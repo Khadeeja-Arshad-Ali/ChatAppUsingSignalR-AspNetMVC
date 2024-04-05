@@ -83,14 +83,11 @@ connection.on("RecieveMessage", function (username, message) {
     console.log(`before: ${encodedMsg}`);
 
     var li = document.createElement("li");
-    
-    if (username === currentUser) {
+
         // If the message is from the current user
         li.classList.add("message","my-message");
-    } else {
-        // If the message is from another user
-        li.classList.add("message","other-message");
-    } // Add message class for styling
+ 
+    // Add message class for styling
     li.innerHTML = `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
