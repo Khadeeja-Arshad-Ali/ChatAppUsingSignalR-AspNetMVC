@@ -59,18 +59,21 @@ connection.on("RecieveMessage", function (username, message) {
     if(currentUser === username){
 
         // If the message is from the current user
-        li.classList.add("message","my-message");
+        li.classList.add("msg-box","send");
         
     
 
     }else{
-        li.classList.add("message","other-message");
+        li.classList.add("msg-box","recieved");
          
       
 
     }
     // Add message class for styling
-    li.innerHTML = `${encodedMsg}`;
+    li.innerHTML = 
+
+
+    `${encodedMsg}`;
     console.log(`after: ${li.textContent}`);
     document.getElementById("messagesList").appendChild(li);
     updateLastSeen();
