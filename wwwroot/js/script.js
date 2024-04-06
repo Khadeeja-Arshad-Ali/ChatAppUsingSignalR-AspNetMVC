@@ -20,7 +20,7 @@ function SetUsername() {
     username = usernameinput;
 
     document.getElementById("userinfo").style.display = "none";
-    document.getElementById("messagearea").style.display = "block";
+    document.getElementById("chat-container").style.display = "block";
 
     document.getElementById("username1").innerHTML = usernameinput;
 
@@ -59,12 +59,12 @@ connection.on("RecieveMessage", function (username, message) {
     if(currentUser === username){
 
         // If the message is from the current user
-        li.classList.add("msg-box","send");
+        li.classList.add("msg-box","recieved");
         
     
 
     }else{
-        li.classList.add("msg-box","recieved");
+        li.classList.add("msg-box","send");
          
       
 

@@ -17,7 +17,7 @@
            
         </div>
        
-    </div>
+    
      <div id="userinfo" class="row">
             <label style="margin-left: 25px;" for="username">Enter your user name</label>
             <input style="margin-left: 25px;" type="text" class="form-control" id="username" name="username" autocomplete="off"/>
@@ -26,14 +26,14 @@
         </div>
 
        
-    </div>
-    <div id="messagearea" class="row" style="display: none;">
+    
+  
 
         @* <div>Joined as:<b><span id="username1">Not Set</span></b></div>
     
         <hr/> *@
-        <div id="msgPanel" class="row">
-             <div id="chat-container" class="container">
+       
+             <div id="chat-container" class="container" style="display: none;">
 
             <div class="row clearfix">
                 <div class="col-lg-12">
@@ -41,9 +41,12 @@
                     <div class=" card chat-app">
                         <div class="chat">
                             <div class="chat-header clearfix">
-                            <hr/>
+                         
                                 <div class="row">
                                     <div class="col-lg-6">
+                                          <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                                    </a>
 
 
 
@@ -58,6 +61,16 @@
                                             @* <ul id="lastSeen"></ul> *@
                                         </div>
                                     </div>
+                                      @* <div class="col-lg-6 hidden-sm text-right">
+                                    <a href="javascript:void(0);" class="btn btn-outline-secondary"><i
+                                            class="fa fa-camera"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-outline-primary"><i
+                                            class="fa fa-image"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-outline-info"><i
+                                            class="fa fa-cogs"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-outline-warning"><i
+                                            class="fa fa-question"></i></a>
+                                </div> *@
 
 
                                 </div>
@@ -82,7 +95,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    
 
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/script.js"></script>
