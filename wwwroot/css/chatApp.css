@@ -299,12 +299,15 @@ body{
 #messagearea {
     list-style: none;
 }
+
+/* .text{
+    text-align: center;
+} */
 #messageList{
     list-style: none;
-    display: inline-block;
-    text-align: left;
+    /* display: inline-block;
+    text-align: left; */
 }
-
 
 
 .msg-box{
@@ -331,5 +334,10 @@ body{
 .send{
   float: right;
   background-color: rgb(214, 255, 214);
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
